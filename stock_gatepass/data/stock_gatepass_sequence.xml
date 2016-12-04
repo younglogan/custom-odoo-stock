@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="seq_stock_gatepass_code" model="ir.sequence.type">
+            <field name="name">Gatepass</field>
+            <field name="code">stock.gatepass</field>
+        </record>
+
+        <record id="seq_stock_gatepass" model="ir.sequence">
+            <field name="name">Gatepass</field>
+            <field name="code">stock.gatepass</field>
+            <field name="padding">5</field>
+            <field name="prefix">HA</field>
+            <field name="suffix">%(year)s</field>
+        </record>
+    </data>
+</openerp>

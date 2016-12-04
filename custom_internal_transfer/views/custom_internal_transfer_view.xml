@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+      <record id="view_custom_internal_requisition" model="ir.ui.view">
+            <field name="name">custom.internal.transfer.form</field>
+            <field name="model">custom.internal.transfer</field>
+            <field name="arch" type="xml">
+                <form position="attributes">
+                    <header>
+                        <button name="req_send_to_hod" type="object" states="draft" string="Send to HOD" class="oe_highlight"/>
+                        <button name="req_approve" type='object' string="Approve" states="hod" class="oe_highlight"/>
+                        <button name="req_reject" type="object" string="Reject" states="hod,warehouse" class="oe_highlight"/>
+                        <button name="req_send_to_employee" type="object" string="Send to Employee" states="warehouse" class="oe_highlight"/>
+                        <button name="req_receive" type="object" string="Receive" states="employee" class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar" statusbar_colors='{"done":"blue","warehouse":"blue","done":"blue","reject":"red"}'/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="department_id"/>
+                        </group>
+                        <group>
+                            <field name="date_of_req"/>
+                        </group>
+                    </group>
+                    <field name="requisition_items" string="Requisition Items">
+                        <tree string="Item Lines" editable="bottom">
+                            <field name="product_id"/>
+                            <field name="req_quantity"/>
+                            <field name="delivery_quantity"/>
+                            <field name="delivery_quantity_uom"/>
+                            <field name="available_quantity"/>
+                            <field name="source_location"/>
+                            <field name="destination_location"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+
+      <record id="view_custom_internal_transfer_tree" model="ir.ui.view">
+            <field name="name">custom.internal.transfer.tree</field>
+            <field name="model">custom.internal.transfer</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice">
+                    <field name="date_of_req"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                </tree>
+            </field>
+        </record>
+
+      <record id="custom_internal_transfer_action" model="ir.actions.act_window">
+            <field name="name">Custom Internal Transfers</field>
+            <field name="res_model">custom.internal.transfer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+      </record>
+
+      <menuitem action="custom_internal_transfer_action" id="menu_custom_internal_transfer_action" parent="stock.menu_stock_warehouse_mgmt" sequence="0"/>
+
+        <record id="view_employee_product_equipment_form" model="ir.ui.view">
+            <field name="name">hr.employee.product.equipment.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//group[@string='Leaves']" position="before">
+                <group string="Product/Equipments">
+                    <div>
+                    <field name="employee_inventory">
+                        <tree string="Product/Equipment Line" delete="false" create="false">
+                            <field name="product_id" readonly="1"/>
+                            <field name="received_qty" readonly="1"/>
+                        </tree>
+                    </field>
+                    </div>
+                </group>
+            </xpath>
+            </field>
+        </record>
+  </data>
+</openerp>

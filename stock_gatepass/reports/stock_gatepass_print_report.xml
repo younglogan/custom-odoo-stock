@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="stock_gatepass_note">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t>
+                        <t>
+                            <div class="page" style="font-size:0.75em">
+                                <div style="height:500px;">
+                                    <div class="col-xs-8" style="margin-top:100px;">
+                                        <p>Name: <span t-field="o.customer"/></p>
+                                        <p>Address: <span t-field="o.customer" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;fax&quot;], &quot;no_marker&quot;: true}"/></p>
+                                        <p>Challan No.: <span t-foreach="o.challan_no" t-as="l"> <span t-field="l.name"/>, </span></p>
+                                    </div>
+                                    <div class="col-xs-4" style="margin-top:100px;">
+                                        <p>GP No.: <span t-if='o.categ_id' t-field="o.categ_id"/>/<span t-if='o.comp_type' t-field="o.comp_type"/>/<span t-field="o.gp_no"/></p>
+                                        <p>Date: <span t-field="o.date"/></p>
+                                        <p>Vehicle No.: <span t-field="o.vehicle_no"/></p>
+                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr style="font-size:0.75em">
+                                                <th style="text-align:center;">SL. No</th>
+                                                <th style="text-align:center;">DESCRIPTION</th>
+                                                <th style="text-align:center;">CTN/BAG/ROLL</th>
+                                                <th style="text-align:center;">QUANTITY</th>
+                                                <th style="text-align:center;">REMARKS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="o.stock_picking_lines" t-as="line" style="font-size:0.75em">
+                                                <td class="col-xs-2"><span t-field="line.sl_no"/></td>
+                                                <td class="col-xs-4"><span t-field="line.product_id"/></td>
+                                                <td class="col-xs-2"><span t-field="line.ctn_bg_roll"/></td>
+                                                <td class="col-xs-2"><span t-field="line.quantity"/></td>
+                                                <td class="col-xs-2"><span t-field="line.remarks"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="text-center" style="border-top: 1px dashed black; margin-top:100px"></div>
+
+                                <div>
+                                    <div class="col-xs-8" style="margin-top:100px;">
+                                        <p>Name: <span t-field="o.customer"/></p>
+                                        <p>Address: <span t-field="o.customer" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;fax&quot;], &quot;no_marker&quot;: true}"/></p>
+                                        <p>Challan No.: <span t-foreach="o.challan_no" t-as="l"> <span t-field="l.name"/>, </span></p>
+                                    </div>
+                                    <div class="col-xs-4" style="margin-top:100px;">
+                                        <p>GP No.: <span t-if='o.categ_id' t-field="o.categ_id"/>/<span t-if='o.comp_type' t-field="o.comp_type"/>/<span t-field="o.gp_no"/></p>
+                                        <p>Date: <span t-field="o.date"/></p>
+                                        <p>Vehicle No.: <span t-field="o.vehicle_no"/></p>
+                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr style="font-size:0.75em">
+                                                <th style="text-align:center;">SL. No</th>
+                                                <th style="text-align:center;">DESCRIPTION</th>
+                                                <th style="text-align:center;">CTN/BAG/ROLL</th>
+                                                <th style="text-align:center;">QUANTITY</th>
+                                                <th style="text-align:center;">REMARKS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="o.stock_picking_lines" t-as="line" style="font-size:0.75em">
+                                                <td class="col-xs-2"><span t-field="line.sl_no"/></td>
+                                                <td class="col-xs-4"><span t-field="line.product_id"/></td>
+                                                <td class="col-xs-2"><span t-field="line.ctn_bg_roll"/></td>
+                                                <td class="col-xs-2"><span t-field="line.quantity"/></td>
+                                                <td class="col-xs-2"><span t-field="line.remarks"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="custom_stock_gatepass"
+            string="Stock Gatepass"
+            model="stock.gatepass"
+            report_type="qweb-pdf"
+            name="stock_gatepass.stock_gatepass_note"
+            file="stock_gatepass.stock_gatepass_note"
+            />
+
+    </data>
+</openerp>

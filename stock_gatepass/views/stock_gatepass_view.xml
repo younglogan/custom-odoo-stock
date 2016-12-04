@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_stock_gatepass_tree" model="ir.ui.view">
+            <field name="name">stock.gatepass.tree</field>
+            <field name="model">stock.gatepass</field>
+            <field name="arch" type="xml">
+                <tree string="Gatepass">
+                    <field name="gp_no"/>
+                    <field name="challan_no"/>
+                    <field name="customer"/>
+                    <field name="vehicle_no"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_stock_gatepass_form" model="ir.ui.view">
+            <field name="name">stock.gatepass.form</field>
+            <field name="model">stock.gatepass</field>
+            <field name="arch" type="xml">
+                <form string="Gatepass">
+                    <header>
+                        <button name="gatepass_done" states="draft" string="Issue Gatepass" class="oe_highlight" type="object"/>
+                        <!--<button name="send_email" states="draft" string="Send Email" class="oe_highlight" type="object"/>-->
+                        <field name="state" widget="statusbar" statusbar_colors='{"draft":"blue","done":"red"}'/>
+                    </header>
+                    <group>
+                        <group col="2">
+                            <field name="customer" on_change="onchange_customer_in_gp(customer, context)" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="address_id" on_change="onchange_customer_in_gp(customer)" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="categ_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="categ_short_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="comp_type" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group col="2">
+                            <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="gp_no"/>
+                            <field name="challan_no" widget="many2many_tags" domain="[('state','=','done'),('picking_type_id','=',2),('partner_id','=',customer)]" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="vehicle_no" attrs="{'readonly':[('state','!=','draft')]}"/>
+
+                            <field name="pi_generate"/>
+                        </group>
+                    </group>
+                    <div>
+                        <field name="stock_picking_lines" attrs="{'readonly':[('state','!=','draft')]}">
+                            <tree editable="bottom">
+                                <field name="sl_no"/>
+                                <!--<field name="challan_no"/>-->
+                                <field name="product_id"/>
+                                <!--<field name="description"/>-->
+                                <field name="ctn_bg_roll"/>
+                                <field name="quantity"/>
+                                <field name="remarks"/>
+                            </tree>
+                        </field>
+                    </div>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="open_view_stock_gatepass" model="ir.actions.act_window">
+            <field name="name">Gatepass</field>
+            <field name="res_model">stock.gatepass</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_stock_gatepass_menu" action="open_view_stock_gatepass" parent="stock.menu_stock_warehouse_mgmt" name="Gatepass" sequence="10"/>
+
+    </data>
+</openerp>
